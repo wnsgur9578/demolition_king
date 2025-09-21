@@ -1,0 +1,528 @@
+/* =========================
+   MultiLobbyPage.css (clean)
+   ========================= */
+
+/* ---- Vars ---- */
+:root{
+  --panel-bg: rgba(20,22,28,.55);
+  --panel-border: rgba(255,255,255,.08);
+  --text: #e9ecf1;
+  --subtext:#9aa3b2;
+  --accent:#ffd664;
+
+  /* chat nickname colors */
+  --name-me:    #59b3f3;
+  --name-other: #ffffff;
+
+  /* grid sizing */
+  --tile: 250px;
+  --gap: 16px;
+}
+
+/* ---- Layout base ---- */
+.lobby-root{
+  width:100vw; height:100vh;
+  background-position:center; background-size:cover; background-repeat:no-repeat;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'DungGeunMo', sans-serif;
+}
+
+.room-grid{
+  width:100%; height:100%;
+  display:flex; gap:24px;
+  align-items:center; justify-content:flex-start;
+  padding:20px;
+}
+
+/* 왼쪽 슬롯 영역 폭 */
+.slot-wrapper{
+  flex: 0 0 40%;
+  max-width: 40%;
+  align-self: flex-end; /* 아래 정렬 (chat과 라인 맞추기) */
+}
+
+/* ---- Join card ---- */
+.join-card{
+  width:min(92vw,520px);
+  display:flex; flex-direction:column; gap:12px;
+  padding:24px;
+  background:var(--panel-bg); border:1px solid var(--panel-border);
+  border-radius:16px; backdrop-filter: blur(8px);
+  color:var(--text); box-shadow:0 12px 28px rgba(0,0,0,.45);
+}
+.join-card h2{ margin: 0 0 8px; color: var(--accent); }
+.room-line{ display:flex; gap:8px; align-items:center; }
+.room-line input{
+  flex:1; padding:.6rem .8rem; border-radius:10px;
+  border:1px solid var(--panel-border);
+  background:rgba(0,0,0,.25); color:var(--text);
+}
+.btn.primary{
+  padding:.7rem 1rem; border:none; border-radius:12px; color:#fff;;
+  background: linear-gradient(180deg,#3aa85b,#2a7e43);
+}
+.btn.ghost{
+  padding:.6rem 1rem; border-radius:12px; border:1px solid var(--panel-border);
+  background:rgba(255,255,255,.06); color:var(--text); ;
+}
+
+/* ---- Character grid (2x2) ---- */
+.character-grid{
+  display:grid;
+  grid-template-columns: repeat(2, var(--tile));
+  grid-template-rows: repeat(2, var(--tile));
+  gap: var(--gap);
+}
+.character-cell{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+
+.character-slot{
+  position: relative;
+  width: var(--tile); height: var(--tile);
+  border-radius:17px; overflow:hidden;
+  background: rgba(255,255,255,.18);
+  border:1px solid var(--panel-border);
+  box-shadow: inset 0 6px 16px rgba(0,0,0,.15);
+  display:flex; align-items:center; justify-content:center;
+}
+
+.skin-tile{
+  width: 100%; height: 100%;
+  border-radius: 12px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 65% auto;
+  image-rendering: pixelated;
+}
+.skin-fallback{ width:100%; height:100%; background: rgba(0,0,0,.25); }
+
+.host-badge{
+  position:absolute; top:6px; left:6px;
+  background:#ffd664; color:#000; font-size:11px; font-weight:700;
+  padding:2px 6px; border-radius:8px;
+  box-shadow:0 2px 4px rgba(0,0,0,0.4); white-space:nowrap;
+}
+.ready-badge{
+  position:absolute; top:6px; right:6px;
+  background:#10b981; color:#fff; font-size:12px; font-weight:700;
+  padding:2px 6px; border-radius:999px; pointer-events:none;
+}
+.name-badge{
+  position:absolute; left:50%; bottom:8px; transform:translateX(-50%);
+  padding:2px 8px; border-radius:10px;
+  background:rgba(0,0,0,.55); color:#fff; font-size:12px; font-weight:700;
+  max-width:90%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+.start-area{ margin-top:14px; display:flex; align-items:center; gap:12px; }
+.player-count{
+  padding:.4rem .75rem; border-radius:10px;
+  background: rgba(0,0,0,.25); border:1px solid var(--panel-border);
+  color:var(--text); font-size:.9rem;
+}
+
+/* ---- Chat column ---- */
+.chat-wrapper{
+  flex: 0 0 32%;
+  max-width: 32%;
+  min-width: 420px;
+  align-self: flex-end; /* 아래 정렬 */
+}
+
+/* Chat card: header + list + input (glass) */
+.chat-card{
+  position: relative;
+  display:flex; flex-direction:column;
+  padding:0;
+  background: linear-gradient(180deg, rgba(12,14,20,.72), rgba(10,12,18,.60));
+  border:1px solid var(--panel-border);
+  border-radius:18px;
+  color:var(--text);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow:0 16px 36px rgba(0,0,0,.45);
+  overflow:hidden;
+  gap:0;
+}
+.chat-card::before{
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08),
+              inset 0 -1px 0 rgba(255,255,255,.03);
+  pointer-events:none;
+}
+
+/* Chat header */
+.chat-title{
+  padding:14px 16px;
+  font-weight:900; letter-spacing:.08em; color:#cfe6ff;
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0));
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+/* Chat list (inline: nickname · message) */
+.chat-list{
+  height:340px;
+  padding:14px 16px;
+  overflow-y:auto;
+  display:flex; flex-direction:column; gap:8px;
+  background: linear-gradient(180deg, rgba(0,0,0,.16), rgba(0,0,0,.26));
+  border:none;
+}
+.chat-list::-webkit-scrollbar{ width:10px; }
+.chat-list::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.15);
+  border-radius:999px; border:2px solid transparent; background-clip:padding-box;
+}
+.chat-list::-webkit-scrollbar-track{ background: transparent; }
+
+/* one-line entry */
+.chat-line{
+  display:flex; gap:8px; align-items:flex-start;
+  line-height:1.45; font-size:15px;
+}
+.chat-line .name-inline{
+  white-space:nowrap; font-weight:600;
+  color: var(--name-other);
+  text-shadow: 0 0 6px rgba(197, 215, 233, 0.15);
+}
+.chat-line.me .name-inline{
+  color: var(--name-me);
+  text-shadow: 0 0 6px rgba(136, 255, 100, 0.25);
+}
+.chat-line .msg-inline{ color: var(--text); word-break: break-word; }
+
+/* Chat input */
+.chat-input{
+  display:flex; gap:8px; align-items:center;
+  padding:10px;
+  background: rgba(0,0,0,.18);
+  border-top:1px solid rgba(255,255,255,.06);
+  border-radius:0 0 18px 18px;
+}
+.chat-input input{
+  flex:1; padding:10px 12px; border-radius:10px;
+  border:1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.06);
+  color: var(--text); outline:none;
+}
+.btn.send{
+  padding:10px 16px; border-radius:10px;
+  background: linear-gradient(180deg,#3b7bef,#274db3);
+  color:#fff; font-weight:800; border:none;
+  transition: transform .06s ease, filter .12s ease;
+}
+.btn.send:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+.btn.send:active{ transform: translateY(0); }
+
+/* ---- Right panel (friends + controls) ---- */
+.right-panel{
+  display:flex; flex-direction:column; gap:12px;
+  margin-left:auto; margin-right:20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius:8px;
+  flex:0 0 20%; max-width:20%;
+  align-items:stretch;
+}
+
+.friends-card{
+  background: rgba(15, 18, 25, 0.8);
+  padding:20px;
+  border-radius:14px;
+  margin-bottom:8px;
+  min-height:520px;
+  width:100%;
+}
+.friends-title{ color:#cfe6ff; font-weight:700; margin-bottom:12px; font-size:20px; }
+.friends-list{ display:flex; flex-direction:column; gap:8px; max-height:180px; overflow:auto; }
+.friend-row{ display:flex; align-items:center; gap:8px; }
+.dot-online{ width:8px; height:8px; border-radius:50%; background:#3ee06f; display:inline-block; }
+.friend-name{ flex:1; color:#f2f6ff; }
+.btn.invite{ background:#e53935; color:#fff; border:none; padding:4px 8px; border-radius:8px; }
+.btn.invite:disabled {
+  background-color: #ccc;   /* 회색 배경 */
+  color: #666;              /* 글자 색 연하게 */
+  cursor: not-allowed;      /* 마우스 커서 비활성화 표시 */
+  opacity: 0.8;             /* 약간 흐리게 */
+}
+
+.friends-empty{ color:#9fb3c8; font-size:12px; }
+
+/* Controls (leave / start / ready) */
+.control-panel{
+  position:relative; top:-2px;
+  background: var(--panel-bg);
+  border:1px solid var(--panel-border);
+  border-radius:16px;
+  padding:22px 24px;
+  box-shadow:0 12px 28px rgba(0,0,0,.45);
+  display:flex; flex-direction:column; gap:14px;
+  margin:0 0 12px 0;
+  width:100%; box-sizing:border-box;
+}
+.btn.big{
+  width:100%; padding:18px 20px;
+  font-size:28px; font-weight:800;
+  border:none; border-radius:14px; color:#fff; 
+}
+.start-cta{ background: linear-gradient(180deg,#3aa85b,#2a7e43); }
+.ready-cta{ background: linear-gradient(180deg,#3b7bef,#274db3); }
+.btn.big:disabled{ opacity:.55;  filter:grayscale(.25); }
+
+.leave-cta{
+  background: linear-gradient(180deg,#ef5350,#c62828) !important;
+  color:#fff !important; border:none !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
+.leave-cta:hover{ filter: brightness(1.05); }
+.leave-cta:active{ transform: translateY(1px); }
+
+.control-sub{ margin-top:10px; font-size:13px; color:var(--subtext); }
+
+/* ---- Toast ---- */
+.toast{
+  position:fixed; top:18px; right:18px; z-index:9999;
+  padding:12px 14px; border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  background:rgba(50,50,50,.92); color:#fff; font-weight:700; letter-spacing:.2px;
+}
+.toast.warn{ background:rgba(235,87,87,.95); }
+.toast.info{ background:rgba(47,128,237,.95); }
+.toast.success{ background:rgba(39,174,96,.95); }
+
+/* ---- Modal ---- */
+.modal-backdrop{
+  position:fixed; inset:0; z-index:10000;
+  background:rgba(0,0,0,.45);
+  display:flex; align-items:center; justify-content:center;
+}
+.modal-card{
+  width:min(420px, 92vw);
+  background:#fff; color:#111;
+  border-radius:16px; padding:20px 18px 16px;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+}
+.modal-title{ font-size:18px; font-weight:800; margin-bottom:10px; }
+.modal-body{ font-size:14px; line-height:1.5; color:#333; margin-bottom:18px; }
+.modal-actions{ display:flex; justify-content:flex-end; gap:10px; }
+.btn.primary{ background:#3478f6; color:#fff; border:none; padding:10px 14px; border-radius:10px; font-weight:700; }
+.btn.primary:disabled{ opacity:.6; cursor:not-allowed; }
+
+/* ---- Responsive tweaks ---- */
+@media (max-width: 1400px){
+  .chat-wrapper{ min-width:360px; flex-basis:30%; max-width:30%; }
+}
+@media (max-width: 1200px){
+  .chat-wrapper{ min-width:320px; flex-basis:28%; max-width:28%; }
+}
+/* ===== 살짝만 위로 올리는 미세 조정 ===== */
+:root{
+  --lift: 100px; /* 2~6px 사이로 취향대로 미세 조정 */
+}
+
+.room-grid{
+  /* 기존 padding-top이 너무 크면 살짝만 줄임 */
+  padding-top: 14px; /* 필요하면 12~16px 사이로 조정 */
+}
+
+/* 캐릭터 그리드와 채팅 카드만 살짝 띄우기 (레이아웃 영향 최소) */
+/* ✅ chat-card만 위로 올리기 */
+/* ✅ 채팅 카드 + 캐릭터 그리드만 살짝 위로 */
+:root{
+  --pair-lift: 145px; /* 10~24px 사이로 원하시는 만큼 조절 */
+}
+
+/* 이전 wrapper 이동 규칙 무력화 */
+.slot-wrapper,
+.chat-wrapper{
+  transform: none !important;
+}
+
+/* 그리드와 카운트, 채팅 카드만 올리기 */
+.character-grid,
+.start-area,
+.chat-card{
+  transform: translateY(calc(-1 * var(--pair-lift)));
+}
+
+/* 화면이 좁을수록 이동량 살짝 줄이기(선택) */
+@media (max-width: 1400px){ :root{ --pair-lift: 14px; } }
+@media (max-width: 1200px){ :root{ --pair-lift: 10px; } }
+
+/* ✅ chat-card만 위로 올리기 */
+:root{
+  --chat-lift: 43%; /* 10~30px 사이에서 취향껏 조절 */
+}
+
+/* 래퍼에 걸린 이전 transform 무효화(있다면) */
+.slot-wrapper,
+.chat-wrapper{
+  transform: none !important;
+}
+
+/* 채팅 카드만 ↑ */
+.chat-card{
+  transform: translateY(calc(-1 * var(--chat-lift))) !important;
+}
+
+/* 화면 좁을수록 이동량 살짝 줄이기(선택) */
+@media (max-width: 1400px){ :root{ --chat-lift: 14px; } }
+@media (max-width: 1200px){ :root{ --chat-lift: 10px; } }
+/* ✅ chat-card 양옆만 살짝 확장 */
+:root{
+  --chat-extra: 12px; /* 좌우로 늘릴 양 (8~20px 권장) */
+}
+
+.chat-card{
+  width: calc(100% + var(--chat-extra) * 2);
+  margin-left: calc(-1 * var(--chat-extra));
+  margin-right: calc(-1 * var(--chat-extra));
+}
+
+/* 화면이 좁을수록 살짝 줄이기(선택) */
+@media (max-width: 1400px){ :root{ --chat-extra: 10px; } }
+@media (max-width: 1200px){ :root{ --chat-extra: 8px; } }
+
+/* 간판 크기·위치 조절 변수 (원하면 수치만 바꿔) */
+/* 크기/위치만 키움 */
+:root {
+  /* 위로 띄우는 정도 (조절용) */
+  --chat-sign-top: 15px;         
+  /* ⬅️ 이전  clamp(240px, 60%, 520px) → 더 큼직하게 */
+  --chat-sign-width: clamp(120px, 30%, 520px);
+}
+
+/* 간판 이미지 */
+.chat-sign{
+  position: absolute;
+  top: var(--chat-sign-top);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--chat-sign-width);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+}
+
+/* 간판이 커진 만큼 카드와 살짝 간격 */
+.chat-card{
+  margin-top: 28px;  /* 필요에 따라 24~34px 사이로 조절 */
+}
+
+/* === Blue neon override === */
+/* === Blue neon (low spill, darker base) === */
+/* === Blue neon (dimmer) === */
+/* === Blue neon (a bit dimmer) === */
+:root{
+  --neon-color: #6fd3ff;
+}
+
+.chat-sign{
+  filter:
+    brightness(.88) contrast(1.03) saturate(1.05)
+    drop-shadow(0 0 3px  var(--neon-color))
+    drop-shadow(0 0 8px  rgba(111,211,255,.28))
+    drop-shadow(0 0 16px rgba(111,211,255,.16));
+  animation:
+    neonPulseBlue 3.0s ease-in-out infinite,
+    neonBlink 8s linear infinite;
+  will-change: filter;
+}
+
+@keyframes neonPulseBlue{
+  0%, 100% {
+    filter:
+      brightness(.88) contrast(1.03) saturate(1.05)
+      drop-shadow(0 0 3px  var(--neon-color))
+      drop-shadow(0 0 8px  rgba(111,211,255,.26))
+      drop-shadow(0 0 14px rgba(111,211,255,.14));
+  }
+  50% {
+    filter:
+      brightness(1.00) contrast(1.05) saturate(1.10)
+      drop-shadow(0 0 5px  var(--neon-color))
+      drop-shadow(0 0 12px rgba(111,211,255,.36))
+      drop-shadow(0 0 20px rgba(111,211,255,.22));
+  }
+}
+/* 🔧 right-panel 배경만 투명하게 (자식은 그대로 보임) */
+.right-panel{
+  background-color: transparent !important;
+  border: none !important;        /* 테두리도 없애고 싶으면 */
+  box-shadow: none !important;     /* 그림자 제거(있다면) */
+  border-radius: 0 !important;     /* 모서리 둥글게도 제거(선택) */
+}
+/* ---- Full-viewport base ---- */
+html, body, #root { height: 100%; }
+body { margin: 0; }
+
+/* MultiLobbyPage.css — 핵심만 붙여넣기/대체 */
+
+/* 화면 전체를 덮는 캔버스 */
+.lobby-root {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #0b1120; /* 무대 밖 배경색(레터박스 영역) */
+}
+
+/* ⬇ 무대(Stage): 항상 16:9 비율을 유지하면서
+   화면 안에 최대 크기로 들어가도록 계산 */
+.lobby-stage {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* 기본: 화면이 세로가 더 좁을 때 → 높이를 꽉 채우고 너비를 비율로 계산 */
+  width: calc(100vh * (16 / 9));
+  height: 100vh;
+}
+
+/* 화면이 가로로 더 넓을 때 → 너비를 꽉 채우고 높이를 비율로 계산 */
+@media (min-aspect-ratio: 16/9) {
+  .lobby-stage {
+    width: 100vw;
+    height: calc(100vw * (9 / 16));
+  }
+}
+
+/* 무대 배경 이미지(무대 자체가 16:9라서 cover로도 절대 안 잘림) */
+.lobby-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--bg); /* JSX에서 style={{ "--bg": `url(${awaitroomBg})` }} */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; /* 무대와 비율 같으니 크롭 없음 */
+  z-index: 0;
+}
+
+/* 무대 위의 실제 UI는 z-index 1로 */
+.lobby-stage > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 예: 기존 레이아웃이 grid라면 무대 안을 꽉 채우도록 */
+.room-grid,
+.join-card {
+  position: absolute;
+  inset: 0;
+  padding: clamp(12px, 2vw, 28px);
+}
+
+/* 이 두 줄 지우거나 덮어써 */
+.slot-wrapper,
+.chat-wrapper{
+  align-self: center !important; /* was: flex-end */
+}
+
+/* 리프팅 해크 끄기 */
+.character-grid,
+.start-area,
+.chat-card{
+  transform: none !important;
+}
+
+
+

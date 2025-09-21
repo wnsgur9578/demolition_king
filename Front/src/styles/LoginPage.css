@@ -1,0 +1,132 @@
+@font-face {
+  font-family: 'DungGeunMo';
+  src: url('../assets/fonts/DungGeunMo.ttf') format('truetype');
+  font-style: normal;
+}
+
+body, .login-page-background, .login-box, .login-form, .form-row, .login-button, .login-options, .social-login, .login-links {
+  font-family: 'DungGeunMo', Arial, sans-serif;
+}
+.login-page-background {
+width: 100vw;
+  height: 100vh;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  width: 600px;
+  padding: 30px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 50px;
+}
+
+/* label + input + button 같은 줄 */
+.form-row1 {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 8px;
+}
+
+.form-row1 label {
+  width: 80px;
+  margin-right: 10px;
+  font-size: 24px;
+}
+
+.form-row1 input[type="text"],
+.form-row1 input[type="password"] {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 10px;
+  font-size: 18px;
+  border: 2px solid #000;
+  background-color: #000;
+  color: #fff;
+  margin-right: 0;
+  box-sizing: border-box;
+  height: 38px;
+  margin-top: 1px;
+}
+
+.form-row1.with-button input[type="text"],
+.form-row1.with-button input[type="password"] {
+  margin-right: 12px;
+}
+
+/* 로그인 버튼 */
+/* 로그인 버튼을 아이디+비밀번호 입력 높이에 맞춰 세로로 크게 */
+.login-button {
+  background-color: #FFDA17;
+  border: none;
+  padding: 0 32px;
+  color: black;
+  height: 86px;
+  /* margin-left: 20px; */
+  margin-right: 0;
+  border-radius: 8px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+.login-button:hover {
+  background-color: #debf0f;
+}
+
+/* 자동로그인 오른쪽 정렬 */
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  padding-right: 110px;
+  font-size: 20px;
+  gap: 6px;
+}
+
+/* 구글/카카오 */
+.social-login {
+  text-align: center;
+}
+
+.social-login img {
+  width: 70px;
+  margin: 0 12px;
+  border-radius: 50%;
+}
+
+.login-links {
+  text-align: center;
+  font-size: 20px; /* ← 폰트 크기 키움 */
+  letter-spacing: 1px;
+}
+
+.login-links a {
+  text-decoration: none; /* ← 밑줄 제거 */
+  color: black; /* ← 필요 시 색상 지정 */
+  margin: 0 8px; /* ← 선택사항: 간격 추가 */
+}
+
+.login-links a:hover {
+  color: #e6c200; /* ← 마우스 호버 시 색상 변경 (선택사항) */
+}
+/* 비번 입력 아래 상태문구 */
+.status-line-under-password {
+  margin: 0 50px 0 50px; /* label width와 동일하게 들여쓰기 */
+  font-size: 16px;
+  line-height: 1.3;
+  color: #ff5a5a; /* 에러색 (원하시는 색으로 변경 가능) */
+}

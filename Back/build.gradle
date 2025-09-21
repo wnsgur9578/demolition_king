@@ -1,0 +1,104 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.e106'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+	flatDir {
+		dirs 'libs'  // ← 이 부분 중요
+	}
+}
+
+dependencies {
+	//WebSocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	// 메일 발송
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	// 메일 발송시 redis 사용하기 위함
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// Spring Security Session (Redis 기반으로 사용)
+	implementation 'org.springframework.session:spring-session-data-redis'
+
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // LiveKit
+//	implementation 'com.auth0:java-jwt:3.19.2' 		   // LiveKit JWT 생성용
+//	implementation 'com.squareup.okhttp3:okhttp:4.9.1' // LiveKit REST API 호출용
+//	implementation 'io.livekit:livekit-server:0.8.2'   // LiveKit SDK
+//	implementation files('libs/livekit-server-0.8.2')
+//	implementation 'io.livekit:livekit-server:0.10.0'
+//	implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+//	implementation 'com.google.protobuf:protobuf-java:3.21.7'
+//	implementation 'com.google.protobuf:protobuf-java-util:3.21.7'
+//	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0'
+//	runtimeOnly 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+//	runtimeOnly 'com.squareup.retrofit2:converter-protobuf:2.9.0'
+//	runtimeOnly 'com.auth0:java-jwt:4.2.1'
+//	runtimeOnly 'javax.annotation:javax.annotation-api:1.3.2'
+
+
+	// Spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// Swagger (springdoc-openapi)
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0"
+	// MySQL Driver
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	// JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	//oauth
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+
+}
+
+bootJar {
+	archiveFileName = 'app.jar'
+}
+
+jar {
+	enabled = false // 일반 jar 비활성화 (Spring Boot에서는 필요 없음)
+}
+
+
+//jar {
+//	archiveBaseName = 'app'
+//	archiveVersion = ''
+//}
+
+//sourceSets {
+//	main {
+//		resources {
+//			srcDirs = ['src/main/resources']
+//			include '**/*.yml'
+//		}
+//	}
+//}

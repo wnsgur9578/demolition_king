@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket + Redis 온라인 상태 테스트</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 30px;
+        }
+        #status {
+            font-weight: bold;
+        }
+        #log {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f1f1f1;
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🧪 WebSocket + Redis 온라인 상태 테스트</h2>
+
+<p>UUID 입력 후 Connect 누르면 WebSocket 연결 + Redis `online:{uuid}` 등록됨</p>
+<label for="uuid">User UUID:</label>
+<input type="text" id="uuid" placeholder="예: 123e4567-e89b-12d3-a456-426614174000">
+<button onclick="connect()">Connect</button>
+
+<p id="status">📡 상태: 연결 안 됨</p>
+
+<div id="log"></div>
+
+<script>
+    let stompClient = null;
+    let heartbeatInterval = null;
+
+    const log = (msg) => {
+        const logBox = document.getElementById("log");
+        logBox.textContent += `[${new Date().toLocaleTimeString()}] ${msg}\n`;
+        logBox.scrollTop = logBox.scrollHeight;
+    };
+
+    function connect() {
+        const uuid = document.getElementById("uuid").value.trim();
+        if (!uuid) {
+            alert("UUID를 입력하세요");
+            return;
+        }
+
+        // Spring Boot 서버 주소와 WebSocket 엔드포인트를 명시적으로 지정
+        const socket = new SockJS("http://localhost:8080/ws?userUuid=" + uuid);
+        stompClient = Stomp.over(socket);
+
+        stompClient.debug = null; // 로그 출력 끄기
+
+        stompClient.connect({}, function (frame) {
+            document.getElementById("status").innerHTML = "📡 상태: <span style='color:green;'>연결됨</span>";
+            log(`✅ WebSocket 연결됨 - UUID: ${uuid}`);
+
+            // 10초마다 heartbeat 전송
+            heartbeatInterval = setInterval(() => {
+                if (stompClient && stompClient.connected) {
+                    stompClient.send("/app/heartbeat", {}, {});
+                    log("💓 Heartbeat 전송됨");
+                }
+            }, 10000);
+        }, function (error) {
+            document.getElementById("status").innerHTML = "📡 상태: <span style='color:red;'>연결 실패</span>";
+            log("❌ 연결 실패: " + error);
+        });
+    }
+
+    // 브라우저 종료 또는 새로고침 시 WebSocket 끊기
+    window.addEventListener("beforeunload", function () {
+        if (stompClient && stompClient.connected) {
+            stompClient.disconnect(() => {
+                log("🔌 WebSocket 연결 수동 종료됨");
+            });
+        }
+        clearInterval(heartbeatInterval);
+    });
+</script>
+
+</body>
+</html>

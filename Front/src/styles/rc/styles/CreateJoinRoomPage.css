@@ -1,0 +1,73 @@
+:root {
+    --panel-bg: rgba(20, 22, 28, 0.55);
+    --panel-border: rgba(255, 255, 255, 0.08);
+    --text: #e9ecf1;
+    --accent: #ffd664;
+}
+
+.create-join-root {
+    width: 100vw;
+    height: 100vh;
+    background: url("../assets/images/awaitroom/awaitroom.png") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DungGeunMo', sans-serif;
+}
+
+.create-join-box {
+    padding: 2rem;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 320px;
+}
+
+.create-join-box h2 {
+    text-align: center;
+    color: var(--accent);
+}
+
+.create-join-box form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.create-join-box input {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    font-size: 1rem;
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.25);
+    color: var(--text);
+}
+
+.create-join-box input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.create-join-box button {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #334ab1, #2f449f);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    transition: transform 0.06s ease, filter 0.12s ease;
+}
+
+.create-join-box button:hover {
+    filter: brightness(1.05);
+}
+
+.create-join-box button:active {
+    transform: translateY(1px);
+}

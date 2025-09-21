@@ -1,0 +1,190 @@
+/* RankingModal.css */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center; /* 가로 중앙 */
+  align-items: center;     /* 세로 중앙 */
+  z-index: 9999;
+}
+
+.ranking-modal {
+  display: flex;
+  flex-direction: column;  /* 세로 정렬 */
+  align-items: center;     /* 가로 중앙 */
+  gap: 20px;               /* 이미지 사이 간격 */
+  background-color: transparent;
+}
+
+.ranking-img {
+  max-width: 80%;
+  height: auto;
+}
+
+.mylank {
+  margin-top: 40px;
+}
+
+.lankback {
+  margin-top: 10px;
+}
+
+/* 오버레이 공통 */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;  /* 가로 중앙 */
+  align-items: center;      /* 세로 중앙 */
+  z-index: 999;
+}
+
+/* 모달 본체: 세로 정렬 + 가로 중앙 */
+.ranking-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;                /* 로고-보드-내랭크 간격 */
+  background: transparent;
+}
+
+/* 상단 로고 크기 */
+.ranking-logo {
+  width: min(560px, 80vw);
+  height: auto;
+}
+
+/* 보드 배경 + 오버레이 */
+.board-wrap {
+  position: relative;
+  width: min(900px, 90vw);  /* 배경 폭 */
+}
+
+.board-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 배경 위 컨텐츠 박스 */
+.board-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;      /* 세로 중앙 정렬 */
+  justify-content: center;  /* 가로 중앙 정렬 */
+  padding: 36px 48px;       /* 배경 안쪽 여백 (필요 시 조정) */
+  pointer-events: none;     /* 텍스트 클릭 방지 (스타일만) */
+}
+
+/* 로딩/에러 상태 */
+.board-status {
+  font-size: 20px;
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.6);
+}
+.board-status.error { color: #ffeb3b; }
+
+/* 두 컬럼 */
+.board-cols {
+  width: 90%;
+  max-width: 820px;         /* 텍스트 폭 */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 60px;           /* 행/열 간격 */
+  pointer-events: auto;
+}
+
+.board-col {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 한 줄: 등수 . 닉네임 … 점수(오른쪽) */
+.row {
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* 랭크 / 닉 / 점수 */
+  align-items: center;
+  gap: 12px;
+  padding: 15px 0;
+  font-size: 27px; /* 필요시 24~28로 키우세요 */
+  color: #dbe7ff;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.6);
+  white-space: nowrap;
+}
+
+/* 랭크는 살짝 굵게 */
+.rank {
+  font-weight: 700;
+  min-width: 2.5ch; /* '10.' 폭 확보 */
+}
+
+/* 닉네임은 너무 길면 말줄임 */
+.nick {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 점수는 노란색 + 오른쪽 정렬 */
+.score {
+  color: #ffd600;
+  font-weight: 800;
+  min-width: 3ch;           /* 자릿수 고정 */
+  text-align: right;
+  font-size: 30px;
+}
+
+/* 우하단 보조 텍스트 */
+.board-note {
+  position: absolute;
+  right: 30px;
+  bottom: 20px;
+  font-size: 14px;
+  color: #ffd600;
+  opacity: 0.95;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.6);
+  pointer-events: none;
+}
+
+/* 내 랭크 영역(로고 아래, 보드 아래) */
+.ranking-mylank {
+  width: min(560px, 80vw);
+  height: auto;
+}
+/* === 내 랭크 === */
+.my-rank {
+  position: relative;
+  width: min(900px, 80vw);
+}
+.my-rank-img { 
+    width: 100%; 
+    height: auto; 
+    display: block;
+    margin-top: 10px;
+}
+
+.my-rank-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* [좌]라벨 | [중]순위.닉 | [우]점수 */
+  align-items: center;
+  padding: 0 250px;
+  gap: 16px;
+  pointer-events: none;
+}
+
+.my-label { color:#47ff6a; text-shadow:0 2px 0 rgba(0,0,0,.6); white-space:nowrap; font-size:25px;}
+.my-center { display:flex; align-items:center; gap:12px; min-width:0; justify-content:center}
+.my-rank-no { font-size:25px; color:#e9f3ff; font-weight:800; text-shadow:0 2px 0 rgba(0,0,0,.6); white-space:nowrap; }
+.my-nick { font-size:25px; color:#e9f3ff; text-shadow:0 2px 0 rgba(0,0,0,.6); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.my-score { font-size:30px; color:#ffd600; font-weight:900; min-width:3ch; text-align:right; text-shadow:0 2px 0 rgba(0,0,0,.6); }
+.my-loading { grid-column:1 / -1; color:#fff; text-shadow:0 2px 0 rgba(0,0,0,.6); text-align:center; }
+
+/* .my-label, .my-center, .my-score, .my-rank-no, .my-nick { font-size: clamp(16px, 2.2vw, 22px); } */

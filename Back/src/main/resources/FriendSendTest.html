@@ -1,0 +1,53 @@
+<!-- 파일명: sse-sender.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>📨 친구 요청 발신자</title>
+</head>
+<body>
+<h2>📨 친구 요청 전송 페이지</h2>
+
+<label>AccessToken (내 토큰):</label><br>
+<textarea id="tokenInput" rows="4" cols="70" placeholder="Bearer 없이 JWT만 붙여넣으세요"></textarea><br><br>
+
+<label>친구 UUID (받는 사람):</label>
+<input type="text" id="receiverUuid" placeholder="받는 UUID 입력">
+<button onclick="sendFriendRequest()">친구 요청 보내기</button>
+
+<pre id="log" style="background:#e0e0e0; padding:10px; height:200px; overflow:auto;"></pre>
+
+<script>
+    function log(msg) {
+        const logArea = document.getElementById("log");
+        logArea.textContent += msg + "\n";
+        logArea.scrollTop = logArea.scrollHeight;
+    }
+
+    function sendFriendRequest() {
+        const token = document.getElementById("tokenInput").value.trim();
+        const receiver = document.getElementById("receiverUuid").value.trim();
+
+        if (!token || !receiver) {
+            alert("AccessToken과 친구 UUID를 모두 입력해주세요.");
+            return;
+        }
+
+        fetch(`http://localhost:8080/api/users/friends/invite?friendUuid=${receiver}`, {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        }).then(response => {
+            if (response.ok) {
+                log(`📨 친구 요청 전송 완료 → ${receiver}`);
+            } else {
+                response.text().then(t => log("❌ 실패: " + t));
+            }
+        }).catch(error => {
+            log("❌ 오류 발생: " + error);
+        });
+    }
+</script>
+</body>
+</html>

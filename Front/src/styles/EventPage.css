@@ -1,0 +1,201 @@
+@keyframes slideRevealMask {
+  0% {
+    mask-position: right;
+    -webkit-mask-position: right;
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    mask-position: left;
+    -webkit-mask-position: left;
+    opacity: 0;
+  }
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.light-mask-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: 10;
+  pointer-events: none;
+
+  mask-image: linear-gradient(to left, black 0%, black 30%, transparent 100%);
+  mask-size: 300% 100%;
+  mask-repeat: no-repeat;
+  mask-position: right;
+
+  -webkit-mask-image: linear-gradient(to left, black 0%, black 30%, transparent 100%);
+  -webkit-mask-size: 300% 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: right;
+
+  animation: slideRevealMask 2s ease-out forwards;
+  -webkit-animation: slideRevealMask 2s ease-out forwards;
+}
+
+
+
+.event-page {
+  position: relative;
+width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+}
+
+.event-background {
+  position: absolute;
+width: 100vw;
+  height: 100vh;
+  background-image: url('../assets/images/eventmode/eventmapback.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.event-title {
+  color: white;
+  text-align: center;
+  padding-top: 50px;
+  font-size: 2rem;
+}
+
+.map-container {
+  position: relative; /* ⭐ 핀 위치 기준 */
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.event-worldmap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;              /* 필요 시 조절 */
+  max-width: 1050px;
+  height: auto;
+  z-index: 2;              /* 필요시 배경보다 위로 */
+  pointer-events: none;
+}
+
+.event-koreamap {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 65%;         /* 👈 코리아맵은 작게 */
+  max-width: 650px;    /* 👈 최대 크기 제한도 다르게 */
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.event-buttons {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  z-index: 3; /* 배경보다 위로 */
+}
+
+.event-button {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.event-button img {
+  width: 100px;   /* 크기 조절 가능 */
+  height: auto;
+}
+
+.map-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.pin-button {
+  position: absolute;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: url('/mouse65.png') 11 4, auto;
+  z-index: 2;
+
+}
+
+.pin-button img {
+  width: 40px;
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+.pin-button:hover img {
+  transform: scale(1.2);
+}
+
+.map-selection-box {
+  position: absolute;
+  bottom: 60px;
+  right: 90px;
+  width: 350px;
+  height: auto;
+  z-index: 5;
+}
+
+.map-select-background {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.selection-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'DungGeunMo', sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* 박스 클릭 방지, 내부 버튼은 예외 처리 */
+  gap: 40px;
+}
+
+.selection-content p {
+  font-size: 30px;
+  color: black;
+  pointer-events: auto;
+}
+
+.selection-content button {
+  font-size: 30px;
+  padding: 6px 12px;
+  border: none;
+  background-color: rgb(255, 0, 0);
+  color: rgb(255, 255, 255);
+  pointer-events: auto;
+  animation: blink 1.3s infinite;
+
+}

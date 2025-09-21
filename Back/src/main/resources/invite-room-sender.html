@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>📨 방 초대 발신자</title>
+</head>
+<body>
+<h2>📨 방 초대 전송 페이지</h2>
+
+<label>AccessToken:</label><br>
+<textarea id="tokenInput" rows="3" cols="70" placeholder="JWT 토큰만 붙여넣으세요"></textarea><br><br>
+
+<label>친구 UUID (Friend-Uuid 헤더):</label><br>
+<input type="text" id="receiverUuid" placeholder="친구 UUID"><br><br>
+
+<label>방 이름 (roomName 파라미터):</label><br>
+<input type="text" id="roomName" placeholder="예: 복싱연습방-7"><br><br>
+
+<button onclick="sendRoomInvite()">방 초대 보내기</button>
+
+<pre id="log" style="background:#eef; padding:10px; height:200px; overflow:auto;"></pre>
+
+<script>
+  function log(msg) {
+    const area = document.getElementById("log");
+    area.textContent += msg + "\n";
+    area.scrollTop = area.scrollHeight;
+  }
+
+  function sendRoomInvite() {
+    const token = document.getElementById("tokenInput").value.trim();
+    const friendUuid = document.getElementById("receiverUuid").value.trim();
+    const roomName = document.getElementById("roomName").value.trim();
+
+    if (!token || !friendUuid || !roomName) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    }
+
+    const url = `http://localhost:8080/api/users/friends/invite-room?roomName=${encodeURIComponent(roomName)}`;
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Friend-Uuid': friendUuid
+      }
+    })
+            .then(res => {
+              if (res.ok) {
+                log(`✅ 방 초대 전송: ${roomName} → ${friendUuid}`);
+              } else {
+                res.text().then(t => log("❌ 실패: " + t));
+              }
+            })
+            .catch(err => log("❌ 오류: " + err));
+  }
+</script>
+</body>
+</html>

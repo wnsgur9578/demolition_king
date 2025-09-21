@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>👂 방 초대 수신자</title>
+</head>
+<body>
+<h2>👂 방 초대 수신 페이지</h2>
+
+<label>AccessToken:</label><br>
+<textarea id="tokenInput" rows="3" cols="70" placeholder="JWT 토큰만 붙여넣으세요"></textarea><br><br>
+<button onclick="connect()">SSE 연결</button>
+
+<pre id="log" style="background:#fee; padding:10px; height:200px; overflow:auto;"></pre>
+
+<script>
+  let es;
+  function log(msg) {
+    const area = document.getElementById("log");
+    area.textContent += msg + "\n";
+    area.scrollTop = area.scrollHeight;
+  }
+
+  function connect() {
+    const token = document.getElementById("tokenInput").value.trim();
+    if (!token) {
+      alert("AccessToken을 입력해주세요.");
+      return;
+    }
+
+    const url = `http://localhost:8080/api/sse/subscribe?token=${token}`;
+    es = new EventSource(url);
+
+    es.addEventListener("room-invite", e => {
+      log("📬 방 초대 수신: " + e.data);
+      if (Notification.permission === "granted") {
+        new Notification("📬 방 초대", { body: e.data });
+      }
+    });
+
+    es.onerror = () => {
+      log("❌ SSE 오류 발생 또는 연결 종료");
+      es.close();
+    };
+
+    log("🟢 SSE 연결됨");
+  }
+
+  // 알림 권한 요청
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission();
+  }
+</script>
+</body>
+</html>

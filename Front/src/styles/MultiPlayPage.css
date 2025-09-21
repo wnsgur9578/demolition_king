@@ -1,0 +1,202 @@
+/* === 전체 레이아웃 === */
+.mp-root{
+    height:100dvh; width:100%;
+    display:grid; grid-template-areas:"sidebar main right";
+    grid-template-columns:280px 1fr 380px; grid-template-rows:1fr;
+    gap:14px; padding:12px; box-sizing:border-box; overflow:hidden;
+    background:#0a0c0f;
+}
+
+/* ===== main ===== */
+.mp-main{ grid-area:main; display:grid; grid-template-rows:auto 1fr; gap:10px; min-height:0; }
+/* HUD는 위로 */
+.mp-hud {
+    position: relative;
+    z-index: 30;               /* ← HUD가 항상 최상단 */
+}
+
+/* Timer */
+.timer-bar{ height:10px; background:rgba(255,255,255,.2); border-radius:999px; overflow:hidden; margin-bottom:8px; }
+.timer-fill{ height:100%; background:#ff5757; }
+
+/* Combo */
+.command-sequence{ display:flex; gap:30px; }
+.command-circle{ min-width:44px; height:60px; border-radius:999px; display:grid; place-items:center; font-weight:700; color:#e7edf3; box-shadow:0 2px 0 rgba(0,0,0,.25) inset; padding:0 10px; }
+.command-image{ width:80px; height:80px; }
+.command-circle.red{ background:#ff6b6b; color:#1b1d20; }
+.command-circle.done{ opacity:.5; outline:5px solid rgba(255,255,255,.25); }
+.command-circle.current{ outline:6px solid #ffd54a; }
+
+/* Game canvas area */
+.mp-game{ position:relative; min-height:0; display:grid; place-items:center; }
+.mp-game>*{
+    width:100%; height:100%; max-height:calc(100dvh - 140px);
+    aspect-ratio:16/9; object-fit:contain; border-radius:14px; overflow:hidden; background:#0b2030;
+}
+
+/* ===== sidebar (peers) ===== */
+.mp-sidebar{ grid-area:sidebar; display:grid; grid-template-rows:repeat(3,1fr); gap:12px; min-height:0; overflow:hidden; }
+.peer-tile{ position:relative; border-radius:10px; overflow:hidden; background:#000; display:grid; }
+.peer-tile .slot-video{ width:100%; height:100%; object-fit:cover; }
+
+/* ===== right panel ===== */
+.mp-right{ grid-area:right; display:grid; grid-template-rows:1fr auto; gap:12px; min-height:0; }
+
+/* My card */
+.me-card{
+    height:350px; display:flex; flex-direction:column; gap:8px;
+    border-radius:12px; background:#0c0e10; padding:10px; box-shadow:0 4px 16px rgba(0,0,0,.35);
+}
+.me-video-wrap {
+    position: relative;
+    overflow: hidden;          /* ← 카드 밖으로 안 튀어나오게 */
+    border-radius: 14px;
+}
+
+/* MyCamera: video/canvas layering */
+.local-pip{ position:relative; }
+.local-pip video{ position:relative; z-index:1; display:block; width:100%; height:100%; object-fit:cover; }
+.local-pip .overlay{ position:absolute; inset:0; z-index:2; pointer-events:none; background:transparent; }
+
+/* === Status light (우상단, 비디오/캔버스 위) === */
+.status-dot{
+    position:absolute; top:8px; right:8px; z-index:6;
+    width:16px; height:16px; border-radius:50%;
+    border:2px solid rgba(255,255,255,.85);
+    box-shadow:0 0 10px rgba(0,0,0,.45), inset 0 0 4px rgba(255,255,255,.35);
+}
+.status-dot.need_ready{ background:#ff3b30; } /* 빨강 */
+.status-dot.ready{ background:#0a84ff; }     /* 파랑 */
+.status-dot.detected{ background:#ffd60a; box-shadow:0 0 0 6px rgba(255,214,10,.28); } /* 노랑 */
+
+/* Hidden input video (for MP) */
+.mp-hidden-input{
+    position:absolute !important; width:1px !important; height:1px !important;
+    left:-9999px !important; top:-9999px !important;
+    opacity:0 !important; pointer-events:none !important; overflow:hidden !important;
+    clip-path:inset(50%) !important;
+}
+
+/* Stats row */
+.me-stats{
+    font-size:20px; line-height:1.35; color:#cfd6dd; padding:6px 8px; border-radius:8px;
+    background:rgba(255,255,255,.05); display:flex; gap:10px; justify-content:space-between;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+/* Log panel */
+.mp-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 10px;
+    height: 260px;           /* 필요시 높이 조절 */
+}
+
+.mp-chat-title {
+    color: #fff;
+    font-weight: 700;
+}
+.mp-chat-list  { overflow-y: auto; flex: 1; }
+.mp-chat-item {
+    font-size: 14px;
+    color: #fff;          /* ← 흰색 */
+    opacity: 1;           /* 흐림 제거 */
+}
+
+/* === Emote bubble overlays (내/친구 화면 모두) === */
+.emote-overlay {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 5;                /* ← 낮게 */
+    pointer-events: none;      /* 클릭 방해 X */
+}
+
+.emote-overlay.top{ top:6px; right:6px; }
+.emote-bubble{
+    display:inline-block; padding:10px 14px; border-radius:14px;
+    background:rgba(0,0,0,.55); color:#fff; font-weight:700; line-height:1.1;
+    backdrop-filter:blur(2px);
+}
+.emote-large{ font-size:28px; }
+
+/* Emote buttons: 내 카드 하단 고정 */
+.me-emote-wrap{
+    position:absolute; left:8px; right:8px; bottom:8px; z-index:8;
+    display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end;
+}
+.emote-panel{ display:contents; }
+.emote-btn{
+    padding:6px 12px; border-radius:9999px; border:1px solid #3a3a3a;
+    background:#1f1f1f; color:#fff; font-weight:600; line-height:1;
+    cursor:pointer; user-select:none; transition:transform .06s ease, background .12s ease;
+}
+.emote-btn:hover{ background:#262626; }
+.emote-btn:active{ transform:scale(.97); }
+
+/* ====== Responsive ====== */
+@media (max-width:1279.98px){
+    .mp-root{ grid-template-columns:260px 1fr 320px; }
+}
+@media (max-width:1023.98px){
+    .mp-root{
+        grid-template-areas:
+      "sidebar main"
+      "right   main";
+        grid-template-columns:260px 1fr; grid-template-rows:auto 1fr;
+    }
+    .mp-right{ grid-template-rows:auto auto; }
+}
+@media (max-width:767.98px){
+    .mp-root{
+        grid-template-areas:
+      "main"
+      "right"
+      "sidebar";
+        grid-template-columns:1fr; grid-template-rows:auto auto 1fr;
+        gap:10px; padding:8px;
+    }
+    .mp-sidebar{
+        grid-template-rows:none; grid-auto-rows:160px;
+        overflow-x:auto; overflow-y:hidden; display:grid; grid-auto-flow:column; grid-auto-columns:70%; gap:10px;
+    }
+    .mp-main .mp-game>*{ aspect-ratio:16/9; max-height:unset; }
+    .mp-right{ grid-template-rows:auto auto; }
+}
+.local-pip { position: relative; }
+
+/* 상단 가운데 붙는 스탯 배지 */
+.me-stats-overlay {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    z-index: 12;                     /* 비디오 위, 말풍선보다 살짝 위 */
+    pointer-events: none;
+}
+.me-card-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;            /* 스탯바랑 카드 사이 여백 */
+}
+
+/* 내 화면 바로 위에 붙는 스탯 바 */
+.me-stats-bar {
+    text-align: center;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 4px 8px;
+    border-radius: 8px;
+}

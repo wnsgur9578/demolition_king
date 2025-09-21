@@ -1,0 +1,101 @@
+#001  추후  Spring 배포시 변경 (로컬 Spring 기반 세팅)
+spring:
+  application:
+    name: demolition_king
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "${GOOGLE_CLIENT_ID}"
+            client-secret: "${GOOGLE_CLIENT_SECRET}"
+            scope: [ openid, email, profile ]
+            redirect-uri: "${GOOGLE_REDIRECT_URI}"
+          kakao:
+            client-id: "${KAKAO_CLIENT_ID}"
+            authorization-grant-type: authorization_code
+            redirect-uri: "${KAKAO_REDIRECT_URI}"
+            scope: [ account_email, profile_nickname]
+            client-name: Kakao
+        provider:
+          google:
+            issuer-uri: https://accounts.google.com
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+
+  datasource:
+    #001
+    #내부 배포용
+    url: jdbc:mysql://${DB_HOST}/${DB_NAME}?serverTimezone=Asia/Seoul
+    #외부 local용
+#    url: jdbc:mysql://{LOCAL_HOST}/demolition?serverTimezone=Asia/Seoul
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  redis:
+    #001
+    #내부 배포용
+    host: ${REDIS_HOST}
+    #외부 local용
+#    host: {LOCAL_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate # update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  mail:
+    host: ${MAIL_HOST}       # 실제 SMTP 호스트로 변경
+    port: ${MAIL_PORT}                  # SMTP 포트 (TLS)
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}  # Gmail 의 경우 앱 비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: ${SERVER_PORT}
+  forward-headers-strategy: framework
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    url: ${SWAGGER_URL}
+#    로컬용
+#    url: http://localhost:8080/v3/api-docs
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+    persist-authorization: true
+    bearer-format: JWT
+    default-model-expand-depth: 1
+    default-model-rendering: example
+
+swagger:
+  uri: ${SWAGGER_URI}
+#  로컬용
+#  uri: http://localhost:8080
+
+logging:
+  level:
+    root: DEBUG
+    com.e106.demolition_king.game.service: DEBUG
+
+jwt:
+  secret: "${JWT_SECRET}"
+
+livekit:
+  api:
+    key: ${LIVEKIT_API_KEY}
+    secret: ${LIVEKIT_API_SECRET}

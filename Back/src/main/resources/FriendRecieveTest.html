@@ -1,0 +1,61 @@
+<!-- 파일명: sse-receiver.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>👂 친구 요청 수신자</title>
+</head>
+<body>
+<h2>👂 SSE 친구 요청 수신 페이지</h2>
+
+<label>AccessToken: </label><br>
+<textarea id="tokenInput" rows="4" cols="70" placeholder="Bearer 없이 JWT만 붙여넣으세요"></textarea><br><br>
+<button onclick="connectSSE()">SSE 연결</button>
+
+<pre id="log" style="background:#f4f4f4; padding:10px; height:200px; overflow:auto;"></pre>
+
+<script>
+    let eventSource = null;
+
+    function log(msg) {
+        const logArea = document.getElementById("log");
+        logArea.textContent += msg + "\n";
+        logArea.scrollTop = logArea.scrollHeight;
+    }
+
+    function connectSSE() {
+        const token = document.getElementById("tokenInput").value.trim();
+        if (!token) {
+            alert("AccessToken을 입력해주세요.");
+            return;
+        }
+
+        if (Notification.permission !== "granted") {
+            Notification.requestPermission();
+        }
+
+        const url = `http://localhost:8080/api/sse/subscribe?token=${token}`;
+        eventSource = new EventSource(url);
+
+        // fallback (일반 fetch+EventStream Polyfill 필요 시에만)
+        eventSource.addEventListener("friend-request", (event) => {
+            log("📬 친구 요청 수신: " + event.data);
+
+            if (Notification.permission === "granted") {
+                new Notification("📬 친구 요청", {
+                    body: event.data,
+                    icon: "https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                });
+            }
+        });
+
+        eventSource.onerror = () => {
+            log("❌ SSE 오류 발생 또는 연결 종료");
+            eventSource.close();
+        };
+
+        log("🟢 SSE 연결 완료");
+    }
+</script>
+</body>
+</html>
