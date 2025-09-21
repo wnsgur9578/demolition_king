@@ -26,7 +26,7 @@
 
 ### 👤 박민준 (팀장)
 
-![박민준](/uploads/acc15c913a8e48326fbacba6189c57e5/박민준.png)
+![박민준](./readMeAsset/박민준.png)
 
 - **이메일**
     - qkralswns924@naver.com
@@ -42,7 +42,7 @@
 
 ### 👤 윤혜진
 
-![윤혜진](/uploads/260e3afc8e0932700e553826c996b72a/윤혜진.png)
+![윤혜진](./readMeAsset/윤혜진.png)
 
 - **이메일**
     - yhjyhw1004@naver.com
@@ -60,7 +60,7 @@
 
 ### 👤 조창현
 
-![조창현](/uploads/f8a8df174c2e1b8b900ddafa01914425/조창현.png)
+![조창현](./readMeAsset/조창현.png)
 
 - **이메일**
     - ch392930@naver.com
@@ -76,7 +76,7 @@
 
 ### 👤 장준혁
 
-![장준혁](/uploads/2f42fb94f136a460139d7db1728ca5dc/장준혁.png)
+![장준혁](./readMeAsset/장준혁.png)
 
 - **이메일**
     - wnsgur9578@naver.com
@@ -97,7 +97,7 @@
 
 ### 👤 신유빈
 
-![신유빈](/uploads/8707b67f434a586e7c968f5c3ba1eaf4/신유빈.png)
+![신유빈](./readMeAsset/신유빈.png)
 
 - **이메일**
     - syb0317timo12@gmail.com
@@ -115,7 +115,7 @@
 
 ### 👤 홍지훈
 
-![홍지훈](/uploads/7bab878575f35ab2c866b74406eaff1b/홍지훈.png)
+![홍지훈](./readMeAsset/홍지훈.png)
 
 - **이메일**
     - wlgns9807@naver.com
@@ -148,10 +148,10 @@
 ## 📁 문서
 
 ### 🛠 시스템 아키텍처
-![image](/uploads/bf8a54eb3469d9dac00bcb8acd5461cc/image.png){width=539 height=473}
+![시스템 아키텍처](./readMeAsset/image.png)
 
 ### 🧩 ERD
-![image](/uploads/343c2f45c061dec181bfd35e0f554c92/image.png){width=1029 height=1019}
+![ERD](./readMeAsset/image%20(1).png)
 
 ---
 
@@ -159,49 +159,49 @@
 
 ## 🏠**초기 화면(Web)**
 
-| ![초기-_online-video-cutter.com_](/uploads/800cdfcbac23dc5f194cf768105eae96/초기-_online-video-cutter.com_.gif)|
+| ![초기-_online-video-cutter.com_](./readMeAsset/초기-_online-video-cutter.com_.gif)|
 | --- |
 | **초기 화면** <br> 게임 첫 진입 페이지로, 사용자의 상호작용을 통해 로그인 페이지로 진입할수있습니다. |
 
 ### 🔐 **로그인 기능**
 
-| ![로그인-_online-video-cutter.com_](/uploads/4b10a07ec6db65dde981d3dc683deae0/로그인-_online-video-cutter.com_.gif) |![소셜로그인-_online-video-cutter.com_](/uploads/ae44de71eaeb656ad5d5c1dff01e4867/소셜로그인-_online-video-cutter.com_.gif)|
+| ![로그인-_online-video-cutter.com_](./readMeAsset/bibun-ezgif.com-speed.gif) |![소셜로그인-_online-video-cutter.com_](./readMeAsset/소셜로그인_-online-video-cutter.com_.gif)|
 | --- | --- |
 | **로그인 화면** <br> 로그인을 진행하며 메인 페이지로 이동 가능합니다. | **소셜로그인 화면** <br> 소셜계정을 통해 회원가입을 진행할 수 있습니다. |
 
-| ![bibun-ezgif.com-speed](/uploads/5a376874c8193929ccf61f85188290ea/bibun-ezgif.com-speed.gif) | ![sing-ezgif.com-speed](/uploads/90b3f16ecd58d7109be358487151eaf9/sing-ezgif.com-speed.gif) |
+| ![./readMeAsset/bibun-ezgif.com-speed.gif) | ![sing-ezgif.com-speed](./readMeAsset/sing-ezgif.com-speed.gif) |
 | --- | --- |
 | **비밀 번호 찾기** <br> 회원의 비밀번호 찾기 기능을 제공해줍니다. | **회원가입 기능** <br> 회원의 프로필을 선택하고 초기정보를 설정합니다. |
 
 
 ### 🏠 **메인 화면**
 
-| ![main-ezgif.com-speed](/uploads/bb38f887d70c37da307b33529900fd29/main-ezgif.com-speed.gif)|
+| ![./readMeAsset/main-ezgif.com-speed.gif)|
 | --- |
 | **초기 화면** <br> 게임 첫 진입 페이지로, 사용자의 상호작용을 통해 로그인 페이지로 진입할수있습니다. |
 
-| ![image](/uploads/2764f59bf60a895eb28ef51091505e30/image.png){width=1153 height=652} | ![image](/uploads/af57252596ca830031f9b776ac3ab38c/image.png){width=1153 height=648} |
+| ![image](./readMeAsset/image%20(2).png) | ![image](./readMeAsset/image%20(3).png) |
 | --- | --- |
 | **랭킹 상세 조회** <br> 유저들간의 랭킹을 상세 조회할수 있습니다. | **플레이 가이드** <br> 플레이 가이드를 사용자에게 제공해줍니다. |
 
-| ![invite-ezgif.com-speed](/uploads/ca1d516996e0fe3caaebfca4cbabb19e/invite-ezgif.com-speed.gif) | ![invite_re-ezgif.com-speed](/uploads/1159db49c5a505494f0ad9d66429dffb/invite_re-ezgif.com-speed.gif) |
+| ![invite-ezgif.com-speed](./readMeAsset/invite-ezgif.com-speed.gif) | ![invite_re-ezgif.com-speed](./readMeAsset/invite_re-ezgif.com-speed.gif) |
 | --- | --- |
 | **친구 초대 기능** <br> 닉네임으로 친구를 초대할수 있습니다. | **친구 수락 조회 기능** <br> 친구요청을 수락할수 있고 조회할수 있습니다. |
 
-| ![buy-ezgif.com-speed](/uploads/6f7dc367cd520362072afeaf4f17ebad/buy-ezgif.com-speed.gif)|
+| ![buy-ezgif.com-speed](./readMeAsset/buy-ezgif.com-speed.gif)|
 | --- |
 | **캐릭터 구매,선택 화면** <br> 캐릭터를 구매하고 선택할수 있습니다. |
 
-| ![gold-ezgif.com-speed](/uploads/19592edec7d008d43cc85345dbc117b9/gold-ezgif.com-speed.gif) | ![list-ezgif.com-speed](/uploads/e1f873784fbe4cf0c1f992072bf3917a/list-ezgif.com-speed.gif) |
+| ![gold-ezgif.com-speed](./readMeAsset/gold-ezgif.com-speed.gif) | ![list-ezgif.com-speed](./readMeAsset/list-ezgif.com-speed.gif) |
 | --- | --- |
 | **플레이어 구매 선택기능** <br> 게임 플레이로 얻은 골드로 스킨을 선택하고 구매할수 있습니다. | **건물 컬렉션 조회** <br> 게임 플레이를 하며 부순 건물을 조회할수 있습니다. |
 
 ### 🏠 **게임 화면**
 
-| ![show_note2-ezgif.com-speed](/uploads/5fa79e75a5ea039588c3cc2130cc1885/show_note2-ezgif.com-speed.gif) | ![event-ezgif.com-speed](/uploads/adf4448f0e93769649683c1e6ebc4e3d/event-ezgif.com-speed.gif) |
+| ![show_note2-ezgif.com-speed](./readMeAsset/show_note2-ezgif.com-speed.gif) | ![event-ezgif.com-speed](./readMeAsset/event-ezgif.com-speed.gif) |
 | --- | --- |
 | **싱글 플레이 화면** <br> 싱글 플레이로 혼자서 게임을 즐길수 있습니다. | **이벤트 플레이 화면** <br> 각 지역 랜드마크 건물을 보유한 이벤트 맵을 즐길수 있습니다. |
 
-| ![multi6](/uploads/a479bb42526549720641cc53fb10b2e6/multi6.gif) |
+| ![multi6](./readMeAsset/multi6.gif) |
 | --- |
 | **멀티 플레이 화면** <br> 멀티 플레이로 4인이서 게임을 즐길수 있습니다. |
